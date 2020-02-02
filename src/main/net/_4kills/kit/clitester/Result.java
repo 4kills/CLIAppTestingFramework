@@ -7,7 +7,7 @@ import java.util.Objects;
 public final class Result {
     public static final String ERR = "Error, .*";
 
-    final String[] res;
+    private final String[] res;
 
     // forbidden
     private Result() {res = new String[0];}
@@ -67,7 +67,7 @@ public final class Result {
 
     @Override
     public int hashCode() {
-        return Objects.hash(res);
+        return Objects.hash((Object) res);
     }
 
     /**

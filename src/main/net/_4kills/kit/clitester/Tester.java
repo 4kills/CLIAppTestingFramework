@@ -10,7 +10,6 @@ import java.io.PrintStream;
 import java.util.function.Consumer;
 
 public abstract class Tester {
-
     private static long timeout = 1000;
 
     /**
