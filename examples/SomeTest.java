@@ -1,6 +1,8 @@
 import net._4kills.kit.clitester.*;
 import org.junit.jupiter.api.*;
 
+import net._4kills.kit.somepackage.Main;
+
 import java.util.function.Consumer;
 
 class MainTest {
@@ -24,10 +26,6 @@ class MainTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    // you could also set this as static attribute of your test class so you dont have to assign
-    // it every time.
-    static Consumer<String[]> mainMethod = (e) -> net._4kills.kit.somepackage.Main.main(e);
-
     @Test
     void someOtherTest () {
         // we can also test our application by providing additional command line arguments that will be
@@ -36,7 +34,10 @@ class MainTest {
         // even though it is strongly recommanded to always use a "quit" call at the end you don't need to
         // call it explicitly! If you don't call it the main method will timeout after the period specified in
         // Tester.getTimeout(). Use Tester.setTimeout() so specify a custom timeout. 
-        Result actual = Tester.testAll(mainMethod, args, "lol", "start  torus", "badg", "bs", "bs2");
+        Result actual = Tester.testAll(Main::main, args, "lol", "start  torus", "badg", "bs", "bs2");
+        //                                 ^
+        //                                 |
+        // You can also just pass the main method as method reference.
 
         // this time we expect 5 errors, but instead of having to type them all out we can use the following overload:
         Result expected = new Result(5);
