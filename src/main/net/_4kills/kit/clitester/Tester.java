@@ -3,10 +3,7 @@ package net._4kills.kit.clitester;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.function.Consumer;
 
 public abstract class Tester {
@@ -101,6 +98,17 @@ public abstract class Tester {
                  I can't fix this because I have no access to the main method.
                  If the NullPointerException does not originate from the above mentioned cause, the test will fail
                 */
+                final BufferedReader IN = new BufferedReader(new InputStreamReader(System.in));
+                try {
+                    if (IN.readLine() != null) {
+                        e.printStackTrace();
+                        System.err.println(e.getMessage());
+                    }
+
+                } catch (IOException d) {
+                    d.printStackTrace();
+                    System.err.println(d.getMessage());
+                }
             }
         });
         t.start();
