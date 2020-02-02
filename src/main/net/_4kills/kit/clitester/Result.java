@@ -5,6 +5,11 @@ import com.sun.istack.internal.NotNull;
 import java.util.Objects;
 
 public final class Result {
+    /**
+     * Represents an error output by the tested app. This field matches any output starting with "Error, " as
+     * required by the Praktomat. Aside from this field the equals method is a bijection, matching only the
+     * exact provided output.
+     */
     public static final String ERR = "Error, .*";
 
     private final String[] res;

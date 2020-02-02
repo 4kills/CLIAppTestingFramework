@@ -7,7 +7,7 @@ For now you can either integrate the repo into your own project or just download
 from the jar directory and add that to your project. 
 
 **IMPORTANT: Use the edu.kit.informatik.Terminal provided with this project/the jar.**
-This is both convenient, so you don't have to integrate the Terminal class anymore and it 
+This is both convenient, so you don't have to integrate the Terminal class anymore, and it 
 ensures smooth operation by this package. 
 
 # Usage:
