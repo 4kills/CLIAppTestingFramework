@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="CLIAppTestingFramework:jar">
-    <output-path>$PROJECT_DIR$/out</output-path>
+    <output-path>$PROJECT_DIR$/jar</output-path>
     <root id="archive" name="CLIAppTestingFramework.jar">
       <element id="module-output" name="CLIAppTestingFramework" />
     </root>

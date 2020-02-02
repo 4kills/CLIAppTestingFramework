@@ -83,7 +83,7 @@ fabric.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
+!/jar/CLIAppTestingFramework.jar # except for this one
 *.war
 *.nar
 *.ear
