@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 class MainTest {
     @Test
     void someTest () {
-        // the main method of your application
+        // the main method of your application. If you import the package Main.main(e) is sufficient. 
         Consumer<String[]> mainMethod = (e) -> net._4kills.kit.somepackage.Main.main(e);
 
         // tests the given application against the provided commands in the provided order.
@@ -15,8 +15,8 @@ class MainTest {
         Result actual = Tester.testAllCmds(mainMethod, "lol", "start  torus", "badg", "start torus", "quit");
 
         // now you can declare your expected results. The Result.ERR matches any output beginning with "Error, ".
-        // So in this example we expect 3 errors followed by exactly on "OK" output.
-        // After that we expect the app to exit due to the "quit" command. So there shouldn't be any output!
+        // So in this example we expect 3 errors followed by exactly one "OK" output.
+        // After that we expect the app to exit due to the "quit" command, so there shouldn't be any further output!
         Result expected = new Result(Result.ERR, Result.ERR, Result.ERR, "OK");
 
         // finally the assertEquals tests if the actual and expected result are equal, in the sense that
@@ -35,7 +35,7 @@ class MainTest {
         String[] args = new String[] {"argument1", "argument2"};
         // even though it is strongly recommanded to always use a "quit" call at the end you don't need to
         // call it explicitly! If you don't call it the main method will timeout after the period specified in
-        // Tester.getTimeout()
+        // Tester.getTimeout(). Use Tester.setTimeout() so specify a custom timeout. 
         Result actual = Tester.testAll(mainMethod, args, "lol", "start  torus", "badg", "bs", "bs2");
 
         // this time we expect 5 errors, but instead of having to type them all out we can use the following overload:
@@ -44,6 +44,7 @@ class MainTest {
 
         // There is also a mixed constructor that first takes n errors and then other result entries:
         // Result expected = new Result(3, "OK");
+        // = new Result(Result.ERR, Result.ERR, Result.ERR, "OK");
 
         // With junit 5 we can even see the actual results and the expected ones if the tests fail.
         Assertions.assertEquals(expected, actual);
