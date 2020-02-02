@@ -14,7 +14,7 @@ public abstract class Tester {
      * is provided. The main method is forcefully terminated after the specified time in <b>ms</b> has passed.
      * Defaults to 1000 ms.
      * <p>
-     *     If you want the possibly fastest execution please use a "quit" command.
+     * If you want the possibly fastest execution please use a "quit" command.
      * </p>
      *
      * @param t Timeout in ms. Must be greater than 30 ms but smaller than 60 000 ms (1 min).
@@ -29,9 +29,8 @@ public abstract class Tester {
      * is provided. The main method is forcefully terminated after the specified time in <b>ms</b> has passed.
      * Defaults to 1000 ms.
      * <p>
-     *     If you want the possibly fastest execution please use a "quit" command.
+     * If you want the possibly fastest execution please use a "quit" command.
      * </p>
-     *
      */
     public static long getTimeout() {
         return timeout;
@@ -40,6 +39,7 @@ public abstract class Tester {
     /**
      * testAllCmds runs the provided main method with no arguments and then sequentially feeds the provided commands
      * to stdin. Then it collects the results of main from stdout and returns them line-wise as String[].
+     *
      * @param main The main method to be executed
      * @param cmds The line-wise commands to provide to main
      * @return The results main produced in the same order as the provided cmds
@@ -51,6 +51,7 @@ public abstract class Tester {
     /**
      * testAllArgs runs the provided main method with the provided arguments.
      * Then it collects the results of main from stdout and returns them line-wise as String[].
+     *
      * @param main The main method to be executed
      * @param args The command line arguments provided to main
      * @return The results main produced for the given args
@@ -62,17 +63,18 @@ public abstract class Tester {
     /**
      * testAll runs the provided main method with the provided args and then sequentially feeds the provided commands
      * to stdin. Then it collects the results of main from stdout and returns them line-wise as String[].
+     *
      * @param main The main method to be executed
      * @param args The command line arguments provided to main
      * @param cmds The line-wise commands to provide to main
      * @return The results main produced in the same order as the provided cmds
      */
     public static Result testAll(@NotNull Consumer<String[]> main, @Nullable String[] args,
-                                   @Nullable String... cmds) {
+                                 @Nullable String... cmds) {
         InputStream in = new ByteArrayInputStream(normalizeInput(cmds).getBytes());
         InputStream oldIn = System.in;
         System.setIn(in);
-
+        edu.kit.informatik.Terminal.reload();
         Result out = new Result(executeMain(main, args));
 
         System.setIn(oldIn);
@@ -83,14 +85,14 @@ public abstract class Tester {
      * starts the main with provided arguments in a new thread that times out after the period specified
      * by {@link #timeout}. Returns the results in stdout
      */
-    private static String[] executeMain (Consumer<String[]> main, String[] args) {
+    private static String[] executeMain(Consumer<String[]> main, String[] args) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(output);
         PrintStream oldOut = System.out;
         System.setOut(out);
 
         Thread t = new Thread(() -> {
-            try{
+            try {
                 main.accept(args);
             } catch (NullPointerException e) {
                 /* this happens when no "quit" statement is provided, main is interrupted by join
@@ -113,9 +115,9 @@ public abstract class Tester {
         });
         t.start();
 
-        try{
+        try {
             t.join(timeout);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace(); // this shouldn't happen
         }
 
@@ -126,6 +128,7 @@ public abstract class Tester {
 
     /**
      * Adds a newline after each provided command.
+     *
      * @param cmds The commands to be modified
      * @return The commands with newlines
      */
