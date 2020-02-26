@@ -25,6 +25,7 @@ public final class Result {
      */
     public Result (@NotNull String... res) {
         this.res = res;
+        sanitize();
     }
 
     /**
@@ -54,6 +55,16 @@ public final class Result {
                 continue;
             }
             this.res[i] = res[i - n];
+        }
+        sanitize();
+    }
+
+    /**
+     * Deletes all \r characters in the string that might lead to problems with different implementations of the JVM
+     */
+    private void sanitize() {
+        for (int i = 0; i < res.length; i++) {
+            res[i] = res[i].replace("\r", "");
         }
     }
 

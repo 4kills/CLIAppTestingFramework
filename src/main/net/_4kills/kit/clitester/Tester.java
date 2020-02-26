@@ -123,7 +123,8 @@ public abstract class Tester {
 
         System.out.flush();
         System.setOut(oldOut);
-        return output.toString().split("\r\n");
+        String ret = output.toString().replace("\r", "");
+        return ret.split("\n");
     }
 
     /**
