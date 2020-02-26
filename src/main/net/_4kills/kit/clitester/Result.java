@@ -1,7 +1,5 @@
 package net._4kills.kit.clitester;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.Objects;
 
 public final class Result {
@@ -23,7 +21,7 @@ public final class Result {
      * Two results may be passed safely to JUNIT AssertEquals method.
      * @param res The commands to be fed to the main method. First argument = first command executed.
      */
-    public Result (@NotNull String... res) {
+    public Result (String... res) {
         this.res = res;
         sanitize();
     }
@@ -47,7 +45,7 @@ public final class Result {
      * @param n The number of expected Errors
      * @param res The result with n-errors followed by the entries in res.
      */
-    public Result (int n, @NotNull String... res) {
+    public Result (int n, String... res) {
         this.res = new String[n + res.length];
         for (int i = 0; i < n + res.length; i++) {
             if (i < n) {

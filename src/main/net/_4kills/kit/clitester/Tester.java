@@ -1,9 +1,12 @@
 package net._4kills.kit.clitester;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.function.Consumer;
 
 public abstract class Tester {
@@ -44,7 +47,7 @@ public abstract class Tester {
      * @param cmds The line-wise commands to provide to main
      * @return The results main produced in the same order as the provided cmds
      */
-    public static Result testAllCmds(@NotNull Consumer<String[]> main, @NotNull String... cmds) {
+    public static Result testAllCmds(Consumer<String[]> main, String... cmds) {
         return testAll(main, null, cmds);
     }
 
@@ -56,7 +59,7 @@ public abstract class Tester {
      * @param args The command line arguments provided to main
      * @return The results main produced for the given args
      */
-    public static Result testAllArgs(@NotNull Consumer<String[]> main, @NotNull String... args) {
+    public static Result testAllArgs(Consumer<String[]> main, String... args) {
         return new Result(executeMain(main, args));
     }
 
@@ -69,8 +72,8 @@ public abstract class Tester {
      * @param cmds The line-wise commands to provide to main
      * @return The results main produced in the same order as the provided cmds
      */
-    public static Result testAll(@NotNull Consumer<String[]> main, @Nullable String[] args,
-                                 @Nullable String... cmds) {
+    public static Result testAll(Consumer<String[]> main, String[] args,
+                                 String... cmds) {
         InputStream in = new ByteArrayInputStream(normalizeInput(cmds).getBytes());
         InputStream oldIn = System.in;
         System.setIn(in);
