@@ -12,9 +12,6 @@ public final class Result {
 
     private final String[] res;
 
-    // forbidden
-    private Result() {res = new String[0];}
-
     /**
      * Creates a new result with the provided Strings as entries. You can pass {@link #ERR} here to compare
      * against any error message. Two results may be checked for equality by the {@links #equals(Object o)} method.
