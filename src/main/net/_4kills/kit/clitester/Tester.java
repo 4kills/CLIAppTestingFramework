@@ -1,11 +1,8 @@
 package net._4kills.kit.clitester;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.function.Consumer;
 
@@ -13,27 +10,28 @@ public abstract class Tester {
     private static long timeout = 1000;
 
     /**
-     * timeout specifies how long to wait for the main method to terminate. This is needed when no 'quit' command
-     * is provided. The main method is forcefully terminated after the specified time in <b>ms</b> has passed.
+     * Timeout specifies how long to wait for the main method to terminate.
+     * The main method is forcefully terminated after the specified time in <b>ms</b> has passed.
      * Defaults to 1000 ms.
      * <p>
-     * If you want the possibly fastest execution please use a "quit" command.
+     * <b>A value of 0 means to wait indefinitely</b>
      * </p>
      *
-     * @param t Timeout in ms. Must be greater than 30 ms but smaller than 60 000 ms (1 min).
+     * @param t Timeout in ms. t = 0 means to wait indefinitely.
      */
     public static void setTimeout(long t) {
-        if (t < 30 || t > 60000) return;
         timeout = t;
     }
 
     /**
-     * timeout specifies how long to wait for the main method to terminate. This is needed when no 'quit' command
-     * is provided. The main method is forcefully terminated after the specified time in <b>ms</b> has passed.
+     * Timeout specifies how long to wait for the main method to terminate.
+     * The main method is forcefully terminated after the specified time in <b>ms</b> has passed.
      * Defaults to 1000 ms.
      * <p>
-     * If you want the possibly fastest execution please use a "quit" command.
+     * A value of 0 means to wait indefinitely.
      * </p>
+     *
+     * @return Time to wait for the main method in ms or 0 (wait indefinitely)
      */
     public static long getTimeout() {
         return timeout;
@@ -97,23 +95,8 @@ public abstract class Tester {
         Thread t = new Thread(() -> {
             try {
                 main.accept(args);
-            } catch (NullPointerException e) {
-                /* this happens when no "quit" statement is provided, main is interrupted by join
-                 and the main class reads null from the input stream.
-                 I can't fix this because I have no access to the main method.
-                 If the NullPointerException does not originate from the above mentioned cause, the test will fail
-                */
-                final BufferedReader IN = new BufferedReader(new InputStreamReader(System.in));
-                try {
-                    if (IN.readLine() != null) {
-                        e.printStackTrace();
-                        System.err.println(e.getMessage());
-                    }
+            } catch (EndOfStreamException ignored) {
 
-                } catch (IOException d) {
-                    d.printStackTrace();
-                    System.err.println(d.getMessage());
-                }
             }
         });
         t.start();

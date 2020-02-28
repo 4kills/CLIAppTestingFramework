@@ -1,5 +1,7 @@
 package edu.kit.informatik;
 
+import net._4kills.kit.clitester.EndOfStreamException;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -96,8 +98,9 @@ public final class Terminal {
      *         {@code null} if the end of the stream has been reached
      */
     public static String readLine() {
+        final String ret;
         try {
-            return IN.readLine();
+            ret = IN.readLine();
         } catch (final IOException e) {
             /*
              * The IOException will not occur during tests executed by the praktomat, therefore the
@@ -105,6 +108,8 @@ public final class Terminal {
              */
             throw new RuntimeException(e);
         }
+        if (ret == null) throw new EndOfStreamException();
+        return ret;
     }
 
     /**
