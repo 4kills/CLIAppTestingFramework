@@ -4,7 +4,7 @@ This library comprises a small collection of classes for conviently black-box te
 
 Please note that this project was originally created as a support tool for the 
 final examinations in the programming module at the [Karlsruhe Institute of Technology (KIT)](https://www.kit.edu/english/index.php), Germany; winter semester 2019/20. 
-It was designed to help students conduct integration as well as acceptance tests in order to aid them finding bugs in their software before submitting it for evaluation.  
+It was designed to help students conduct integration, as well as acceptance tests, in order to aid them in finding bugs in their software before submitting it for evaluation.  
 Originally, this library was **not** designed as a <ins>general purpose</ins> testing framework. 
 
 # Getting started:
